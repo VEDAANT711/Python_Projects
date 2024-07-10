@@ -4,7 +4,7 @@ import tkinter.messagebox
 from tkinter.constants import SUNKEN
  
 window = tk.Tk()
-window.title('Calculator-GeeksForGeeks')
+window.title('Calculator')
 frame = tk.Frame(master=window, bg="skyblue", padx=10)
 frame.pack()
 entry = tk.Entry(master=frame, relief=SUNKEN, borderwidth=3, width=30)
@@ -91,5 +91,53 @@ button_back.grid(row=7, column=0, columnspan=2, pady=2)
 window.mainloop()
 
 
+
+
+
+
+
+import tkinter as tk
+
+def button_click(event):
+    current = entry.get()
+    text = event.widget.cget("text")
+    if text == "=":
+        try:
+            result = str(eval(current))
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, result)
+        except Exception as e:
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, "Error")
+    elif text == "C":
+        entry.delete(0, tk.END)
+    else:
+        entry.insert(tk.END, text)
+
+root = tk.Tk()
+root.title("Calculator")
+
+entry = tk.Entry(root, width=16, font=('Arial', 24), bd=8, insertwidth=2, justify='right')
+entry.grid(row=0, column=0, columnspan=4)
+
+buttons = [
+    '7', '8', '9', '/',
+    '4', '5', '6', '*',
+    '1', '2', '3', '-',
+    'C', '0', '=', '+'
+]
+
+row = 1
+col = 0
+for button in buttons:
+    btn = tk.Button(root, text=button, padx=20, pady=20, font=('Arial', 18))
+    btn.grid(row=row, column=col)
+    btn.bind("<Button-1>", button_click)
+    col += 1
+    if col == 4:
+        col = 0
+        row += 1
+
+root.mainloop()
 
                    
